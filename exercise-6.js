@@ -1,23 +1,26 @@
-function attack (damage) {
-    // Code disini
-    return damage-2;
-  }
-  
-  function damageCalculation (numberOfAttacks, damagePerAttack) {
-    // Code disini
-    newAtk = attack(damagePerAttack)
-    if (numberOfAttacks === 0 || newAtk === 0) {
-        return 0;
-    } else if (numberOfAttacks === 1) {
-        return newAtk; 
+function meleeRangedGrouping (str) {
+  //your code here
+  var arr = str.split(',');
+  var result = [[], []];
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i].substr(arr[i].length-6) === 'Ranged') {
+        result[0].push(arr[i].substring(0, arr[i].length-7));
     } else {
-        return damageCalculation(numberOfAttacks-1, damagePerAttack) + newAtk;
+        result[1].push(arr[i].substring(0, arr[i].length-6));
     }
   }
-  
-  // TEST CASE
-  console.log(damageCalculation(9, 25)); // 207
-  
-  console.log(damageCalculation(10, 4)); // 20
-  
-  console.log(damageCalculation(5, 20)); // 90
+  if (str.length === 0) {
+      return [];
+  }
+  return result;
+}
+
+// TEST CASE
+
+console.log(meleeRangedGrouping('Razor-Ranged,Invoker-Ranged,Meepo-Melee,Axe-Melee,Sniper-Ranged'));
+// [ ['Razor', 'Invoker', 'Sniper'], ['Meepo', 'Axe'] ]
+
+console.log(meleeRangedGrouping('Drow Ranger-Ranged,Chen-Ranged,Dazzle-Ranged,Io-Ranged'));
+// [ ['Drow Ranger', 'Chen', 'Dazzle', 'Io'], [] ]
+
+console.log(meleeRangedGrouping('')); // []
